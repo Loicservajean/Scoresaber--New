@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil Joueur</title>
+    <link rel="stylesheet" href="/assets/css/Player.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="profile-header">
+
+        <img src="{{.Profile}}" alt="Avatar" class="avatar">
+
+        <div class="profile-right">
+            <h1 class="player-name">{{.Name}}</h1>
+
+            <div class="player-info">
+                <p><span>ID :</span> {{.ID}}</p>
+                <p><span>Pays :</span> {{.Country}}</p>
+                <p><span>Rank Global :</span> #{{.Rank}}</p>
+                <p><span>Rank Pays :</span> #{{.CountryRank}}</p>
+                <p><span>PP :</span> {{.PP}}</p>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

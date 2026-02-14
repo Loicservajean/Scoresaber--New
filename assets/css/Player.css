@@ -1,0 +1,56 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #0e0e10;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.profile-header {
+    display: flex;
+    align-items: flex-start; /* avatar en haut */
+    gap: 20px;
+    background: #1a1c20;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.avatar {
+    width: 150px;
+    border-radius: 10px;
+}
+
+.profile-right {
+    display: flex;
+    flex-direction: column;
+}
+
+.player-name {
+    margin: 0;
+    padding: 0;
+    font-size: 32px;
+}
+
+.player-info {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px; /* réduit l’espace entre les lignes */
+}
+
+.player-info p {
+    margin: 0; /* enlève les grands espaces */
+    padding: 0;
+    font-size: 18px;
+}
+
+.player-info span {
+    font-weight: bold;
+    color: #4da6ff;
+}

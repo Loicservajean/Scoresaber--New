@@ -21,6 +21,8 @@ func SearchHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	maps = service.FilterMaps(maps, q)
+
 	for i := range maps {
 		maps[i].Difficulty.DifficultyRaw = service.DifficultyName(maps[i].Difficulty.DifficultyRaw)
 	}

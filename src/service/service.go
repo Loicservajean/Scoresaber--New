@@ -202,3 +202,23 @@ func DifficultyName(raw string) string {
 	}
 	return raw
 }
+
+func FilterMaps(maps []Leaderboard, query string) []Leaderboard {
+	if query == "" {
+		return maps
+	}
+
+	query = strings.ToLower(query)
+	var result []Leaderboard
+
+	for _, m := range maps {
+		name := strings.ToLower(m.SongName)
+		author := strings.ToLower(m.SongAuthorName)
+
+		if strings.Contains(name, query) || strings.Contains(author, query) {
+			result = append(result, m)
+		}
+	}
+
+	return result
+}

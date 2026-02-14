@@ -21,7 +21,11 @@ func SearchHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	maps = service.FilterMaps(maps, q)
+	maps = service.FilterMapsBy(maps, q)
+	difficulty := r.URL.Query().Get("difficulty")
+	mode := r.URL.Query().Get("mode")
+	statusFilter := r.URL.Query().Get("status")
+	maps = service.FilterBy(maps, difficulty, mode, statusFilter)
 
 	for i := range maps {
 		maps[i].Difficulty.DifficultyRaw = service.DifficultyName(maps[i].Difficulty.DifficultyRaw)

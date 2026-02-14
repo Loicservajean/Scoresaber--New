@@ -27,11 +27,30 @@ type User struct {
 	ScoreStats  ScoreStats `json:"scoreStats"`
 }
 
-func GetUser(id string) (*User, int, error) {
+type PlayerScoreResponse struct {
+	PlayerScores []PlayerScore `json:"playerScores"`
+}
 
-	client := http.Client{
-		Timeout: 5 * time.Second,
-	}
+type PlayerScore struct {
+	Leaderboard struct {
+		ID             int    `json:"id"`
+		SongName       string `json:"songName"`
+		SongAuthorName string `json:"songAuthorName"`
+		DifficultyRaw  string `json:"difficultyRaw"`
+		CoverImage     string `json:"coverImage"`
+		MaxScore       int    `json:"maxScore"`
+	} `json:"leaderboard"`
+
+	Score struct {
+		Rank      int     `json:"rank"`
+		BaseScore int     `json:"baseScore"`
+		Accuracy  float64 `json:"accuracy"`
+		PP        float64 `json:"pp"`
+	} `json:"score"`
+}
+
+func GetUser(id string) (*User, int, error) {
+	client := http.Client{Timeout: 5 * time.Second}
 
 	url := "https://scoresaber.com/api/player/" + id + "/full"
 
@@ -58,4 +77,44 @@ func GetUser(id string) (*User, int, error) {
 	}
 
 	return &data, res.StatusCode, nil
+}
+
+func GetUserScores(id string) ([]PlayerScore, int, error) {
+	client := http.Client{Timeout: 5 * time.Second}
+
+	url := "https://scoresaber.com/api/player/" + id + "/scores?limit=10&sort=recent"
+
+	req, err := http.NewRequest(http.MethodGet, url, nil)
+	if err != nil {
+		return nil, http.StatusInternalServerError, fmt.Errorf("erreur requête : %s", err.Error())
+	}
+
+	res, err := client.Do(req)
+	if err != nil {
+		return nil, http.StatusInternalServerError, fmt.Errorf("erreur réseau : %s", err.Error())
+	}
+
+	defer res.Body.Close()
+
+	if res.StatusCode != http.StatusOK {
+		return nil, res.StatusCode, fmt.Errorf("erreur API : %s", res.Status)
+	}
+
+	var data PlayerScoreResponse
+	decodeErr := json.NewDecoder(res.Body).Decode(&data)
+	if decodeErr != nil {
+		return nil, http.StatusInternalServerError, fmt.Errorf("erreur JSON : %s", decodeErr.Error())
+	}
+
+	for i := range data.PlayerScores {
+		if data.PlayerScores[i].Score.Accuracy == 0 {
+			bs := float64(data.PlayerScores[i].Score.BaseScore)
+			ms := float64(data.PlayerScores[i].Leaderboard.MaxScore)
+			if ms > 0 {
+				data.PlayerScores[i].Score.Accuracy = (bs / ms) * 100
+			}
+		}
+	}
+
+	return data.PlayerScores, res.StatusCode, nil
 }

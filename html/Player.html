@@ -11,19 +11,51 @@
 
     <div class="profile-header">
 
-        <img src="{{.Profile}}" alt="Avatar" class="avatar">
+        <img src="{{.User.Profile}}" alt="Avatar" class="avatar">
 
         <div class="profile-right">
-            <h1 class="player-name">{{.Name}}</h1>
+            <h1 class="player-name">{{.User.Name}}</h1>
 
             <div class="player-info">
-                <p><span>ID :</span> {{.ID}}</p>
-                <p><span>Pays :</span> {{.Country}}</p>
-                <p><span>Rank Global :</span> #{{.Rank}}</p>
-                <p><span>Rank Pays :</span> #{{.CountryRank}}</p>
-                <p><span>PP :</span> {{.PP}}</p>
+                <p><span>ID :</span> {{.User.ID}}</p>
+                <p><span>Pays :</span> {{.User.Country}}</p>
+                <p><span>Rank Global :</span> #{{.User.Rank}}</p>
+                <p><span>Rank Pays :</span> #{{.User.CountryRank}}</p>
+                <p><span>PP :</span> {{.User.PP}}</p>
             </div>
         </div>
+
+    </div>
+
+    <div class="section">
+        <h2>Scores récents</h2>
+
+        {{range .Scores}}
+        <div class="score-card">
+
+            <img src="{{.Leaderboard.CoverImage}}" class="cover">
+
+            <div class="score-info">
+
+                <p class="map-title">{{.Leaderboard.SongName}}</p>
+                <p class="map-author">{{.Leaderboard.SongAuthorName}}</p>
+
+                <p><span>Difficulté :</span> {{.Leaderboard.DifficultyRaw}}</p>
+                <p><span>Score :</span> {{.Score.BaseScore}}</p>
+                <p><span>Accuracy :</span> {{printf "%.2f" .Score.Accuracy}}%</p>
+                <p><span>PP :</span> {{.Score.PP}}</p>
+                <p><span>Rank :</span> #{{.Score.Rank}}</p>
+
+                <a class="map-link"
+                   href="https://scoresaber.com/leaderboard/{{.Leaderboard.ID}}"
+                   target="_blank">
+                   Voir sur ScoreSaber
+                </a>
+
+            </div>
+
+        </div>
+        {{end}}
 
     </div>
 

@@ -14,7 +14,7 @@ body {
 
 .profile-header {
     display: flex;
-    align-items: flex-start; /* avatar en haut */
+    align-items: flex-start;
     gap: 20px;
     background: #1a1c20;
     padding: 20px;
@@ -41,11 +41,11 @@ body {
     margin-top: 8px;
     display: flex;
     flex-direction: column;
-    gap: 4px; /* réduit l’espace entre les lignes */
+    gap: 4px;
 }
 
 .player-info p {
-    margin: 0; /* enlève les grands espaces */
+    margin: 0;
     padding: 0;
     font-size: 18px;
 }
@@ -53,4 +53,58 @@ body {
 .player-info span {
     font-weight: bold;
     color: #4da6ff;
+}
+
+.section {
+    margin-top: 25px;
+    background: #1a1c20;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.score-card {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #333;
+}
+
+.cover {
+    width: 80px;
+    height: 80px;
+    border-radius: 6px;
+}
+
+.score-info p {
+    margin: 2px 0;
+}
+
+.map-title {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.map-author {
+    font-size: 14px;
+    color: #aaa;
+}
+
+.map-link {
+    margin-top: 5px;
+    display: inline-block;
+    color: #4da6ff;
+    text-decoration: none;
+}
+
+.music-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.music-list li {
+    padding: 6px 0;
+    border-bottom: 1px solid #333;
+    font-size: 16px;
 }

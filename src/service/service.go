@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"net/url"
+	"strings"
 	"time"
 )
 
@@ -117,4 +119,86 @@ func GetUserScores(id string) ([]PlayerScore, int, error) {
 	}
 
 	return data.PlayerScores, res.StatusCode, nil
+}
+
+type LeaderboardSearch struct {
+	Leaderboards []Leaderboard `json:"leaderboards"`
+	Metadata     Metadata      `json:"metadata"`
+}
+
+type Metadata struct {
+	Total        int `json:"total"`
+	Page         int `json:"page"`
+	ItemsPerPage int `json:"itemsPerPage"`
+}
+
+type Leaderboard struct {
+	ID              int        `json:"id"`
+	SongHash        string     `json:"songHash"`
+	SongName        string     `json:"songName"`
+	SongSubName     string     `json:"songSubName"`
+	SongAuthorName  string     `json:"songAuthorName"`
+	LevelAuthorName string     `json:"levelAuthorName"`
+	Difficulty      Difficulty `json:"difficulty"`
+	MaxScore        int        `json:"maxScore"`
+	Ranked          bool       `json:"ranked"`
+	Qualified       bool       `json:"qualified"`
+	Loved           bool       `json:"loved"`
+	Plays           int        `json:"plays"`
+	DailyPlays      int        `json:"dailyPlays"`
+	CoverImage      string     `json:"coverImage"`
+}
+
+type Difficulty struct {
+	LeaderboardId int    `json:"leaderboardId"`
+	Difficulty    int    `json:"difficulty"`
+	GameMode      string `json:"gameMode"`
+	DifficultyRaw string `json:"difficultyRaw"`
+}
+
+func GetMaps(name string) ([]Leaderboard, int, error) {
+	client := http.Client{Timeout: 5 * time.Second}
+
+	encoded := url.QueryEscape(name)
+	url := "https://scoresaber.com/api/leaderboards?search=" + encoded
+
+	req, err := http.NewRequest(http.MethodGet, url, nil)
+	if err != nil {
+		return nil, http.StatusInternalServerError, fmt.Errorf("erreur requête : %s", err.Error())
+	}
+
+	res, err := client.Do(req)
+	if err != nil {
+		return nil, http.StatusInternalServerError, fmt.Errorf("erreur réseau : %s", err.Error())
+	}
+
+	defer res.Body.Close()
+
+	if res.StatusCode != http.StatusOK {
+		return nil, res.StatusCode, fmt.Errorf("erreur API : %s", res.Status)
+	}
+
+	var data LeaderboardSearch
+	decodeErr := json.NewDecoder(res.Body).Decode(&data)
+	if decodeErr != nil {
+		return nil, http.StatusInternalServerError, fmt.Errorf("erreur JSON : %s", decodeErr.Error())
+	}
+
+	return data.Leaderboards, res.StatusCode, nil
+}
+
+func DifficultyName(raw string) string {
+	switch {
+	case strings.Contains(raw, "Easy"):
+		return "Easy"
+	case strings.Contains(raw, "Normal"):
+		return "Normal"
+	case strings.Contains(raw, "Hard"):
+		return "Hard"
+	case strings.Contains(raw, "ExpertPlus"):
+		return "Expert+"
+	case strings.Contains(raw, "Expert"):
+		return "Expert"
+	}
+	return raw
 }

@@ -1,0 +1,64 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #0f0f0f;
+    color: white;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 32px;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+form input {
+    width: 300px;
+    padding: 10px;
+    border: none;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+}
+
+form button {
+    padding: 10px 20px;
+    border: none;
+    background: #1db954;
+    color: white;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+}
+
+.results {
+    width: 90%;
+    max-width: 1100px;
+    margin: 40px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+}
+
+.map-card {
+    background: #1a1a1a;
+    width: 220px;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.map-card img {
+    width: 100%;
+    border-radius: 6px;
+}
+
+.map-card p {
+    margin: 8px 0;
+    font-size: 14px;
+}

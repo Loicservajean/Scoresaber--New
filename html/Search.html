@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Recherche de maps</title>
+    <link rel="stylesheet" href="/assets/css/Search.css">
+</head>
+<body>
+
+<h1>Recherche de maps</h1>
+
+<form method="GET" action="/search">
+    <input type="text" name="q" placeholder="Nom de la map" value="{{.Query}}">
+    <button type="submit">Rechercher</button>
+</form>
+
+<div class="results">
+    {{range .Maps}}
+    <div class="map-card">
+        <img src="{{.CoverImage}}" class="cover">
+        <p>{{.SongName}}</p>
+        <p>{{.SongAuthorName}}</p>
+        <p>Difficulté : {{.Difficulty.DifficultyRaw}}</p>
+        <p>Plays : {{.Plays}}</p>
+    </div>
+    {{end}}
+</div>
+
+</body>
+</html>

@@ -16,6 +16,8 @@ func Routes(mux *http.ServeMux) {
 	mux.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
 
 	mux.HandleFunc("/player", handler.PlayerPageHandler)
+	mux.HandleFunc("/search", handler.SearchHandler)
+
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		templates.ExecuteTemplate(w, "Home.html", nil)
 	})

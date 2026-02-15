@@ -7,11 +7,21 @@
 </head>
 <body>
 
+<header>
+    <div class="logo">ScoreSaber</div>
+    <nav>
+        <a href="/">Accueil</a>
+        <a href="/search">Recherche</a>
+        <a href="/favorites">Favoris</a>
+    </nav>
+</header>
+
 <h1>Vos Favoris</h1>
 
 <div class="fav-list">
     {{range .}}
     <div class="fav-card">
+
         <img src="{{.CoverImage}}">
 
         <div class="fav-info">
@@ -28,6 +38,7 @@
         </div>
 
         <a class="fav-remove" href="/favorite/toggle?id={{.ID}}">★</a>
+
     </div>
     {{else}}
         <p style="text-align:center;">Aucun favori pour le moment.</p>

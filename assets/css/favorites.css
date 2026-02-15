@@ -1,0 +1,56 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #0f0f0f;
+    color: white;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 32px;
+}
+
+.fav-list {
+    width: 90%;
+    max-width: 900px;
+    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.fav-card {
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.fav-card img {
+    width: 130px;
+    height: 130px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.fav-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.fav-info p {
+    margin: 0;
+    font-size: 15px;
+}
+
+.fav-remove {
+    margin-left: auto;
+    font-size: 28px;
+    color: #1db954;
+    text-decoration: none;
+}

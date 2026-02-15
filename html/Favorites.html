@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Favoris</title>
+    <link rel="stylesheet" href="/assets/css/Favorites.css">
+</head>
+<body>
+
+<h1>Vos Favoris</h1>
+
+<div class="fav-list">
+    {{range .}}
+    <div class="fav-card">
+        <img src="{{.CoverImage}}">
+
+        <div class="fav-info">
+            <p><strong>{{.SongName}}</strong></p>
+            <p>Auteur : {{.SongAuthorName}}</p>
+            <p>Difficulté : {{.Difficulty.DifficultyRaw}}</p>
+            <p>Mode : {{.Difficulty.GameMode}}</p>
+            <p>Plays : {{.Plays}}</p>
+            <p>
+                {{if .Ranked}}Ranked{{end}}
+                {{if .Qualified}}Qualified{{end}}
+                {{if .Loved}}Loved{{end}}
+            </p>
+        </div>
+
+        <a class="fav-remove" href="/favorite/toggle?id={{.ID}}">★</a>
+    </div>
+    {{else}}
+        <p style="text-align:center;">Aucun favori pour le moment.</p>
+    {{end}}
+</div>
+
+</body>
+</html>

@@ -54,7 +54,6 @@ type PlayerScore struct {
 
 func GetUser(id string) (*User, int, error) {
 	client := http.Client{Timeout: 5 * time.Second}
-
 	url := "https://scoresaber.com/api/player/" + id + "/full"
 
 	req, err := http.NewRequest(http.MethodGet, url, nil)
@@ -66,7 +65,6 @@ func GetUser(id string) (*User, int, error) {
 	if err != nil {
 		return nil, http.StatusInternalServerError, fmt.Errorf("erreur réseau : %s", err.Error())
 	}
-
 	defer res.Body.Close()
 
 	if res.StatusCode != http.StatusOK {
@@ -74,9 +72,9 @@ func GetUser(id string) (*User, int, error) {
 	}
 
 	var data User
-	decodeErr := json.NewDecoder(res.Body).Decode(&data)
-	if decodeErr != nil {
-		return nil, http.StatusInternalServerError, fmt.Errorf("erreur JSON : %s", decodeErr.Error())
+	err = json.NewDecoder(res.Body).Decode(&data)
+	if err != nil {
+		return nil, http.StatusInternalServerError, fmt.Errorf("erreur JSON : %s", err.Error())
 	}
 
 	return &data, res.StatusCode, nil
@@ -84,7 +82,6 @@ func GetUser(id string) (*User, int, error) {
 
 func GetUserScores(id string) ([]PlayerScore, int, error) {
 	client := http.Client{Timeout: 5 * time.Second}
-
 	url := "https://scoresaber.com/api/player/" + id + "/scores?limit=10&sort=recent"
 
 	req, err := http.NewRequest(http.MethodGet, url, nil)
@@ -96,7 +93,6 @@ func GetUserScores(id string) ([]PlayerScore, int, error) {
 	if err != nil {
 		return nil, http.StatusInternalServerError, fmt.Errorf("erreur réseau : %s", err.Error())
 	}
-
 	defer res.Body.Close()
 
 	if res.StatusCode != http.StatusOK {
@@ -104,9 +100,9 @@ func GetUserScores(id string) ([]PlayerScore, int, error) {
 	}
 
 	var data PlayerScoreResponse
-	decodeErr := json.NewDecoder(res.Body).Decode(&data)
-	if decodeErr != nil {
-		return nil, http.StatusInternalServerError, fmt.Errorf("erreur JSON : %s", decodeErr.Error())
+	err = json.NewDecoder(res.Body).Decode(&data)
+	if err != nil {
+		return nil, http.StatusInternalServerError, fmt.Errorf("erreur JSON : %s", err.Error())
 	}
 
 	for i := range data.PlayerScores {
@@ -148,6 +144,7 @@ type Leaderboard struct {
 	Plays           int        `json:"plays"`
 	DailyPlays      int        `json:"dailyPlays"`
 	CoverImage      string     `json:"coverImage"`
+	IsFav           bool
 }
 
 type Difficulty struct {
@@ -157,9 +154,10 @@ type Difficulty struct {
 	DifficultyRaw string `json:"difficultyRaw"`
 }
 
+var LastSearchResults []Leaderboard
+
 func GetMaps(name string, page int) ([]Leaderboard, int, error) {
 	client := http.Client{Timeout: 5 * time.Second}
-
 	encoded := url.QueryEscape(name)
 	url := "https://scoresaber.com/api/leaderboards?search=" + encoded + "&page=" + strconv.Itoa(page)
 
@@ -172,7 +170,6 @@ func GetMaps(name string, page int) ([]Leaderboard, int, error) {
 	if err != nil {
 		return nil, http.StatusInternalServerError, fmt.Errorf("erreur réseau : %s", err.Error())
 	}
-
 	defer res.Body.Close()
 
 	if res.StatusCode != http.StatusOK {
@@ -180,10 +177,12 @@ func GetMaps(name string, page int) ([]Leaderboard, int, error) {
 	}
 
 	var data LeaderboardSearch
-	decodeErr := json.NewDecoder(res.Body).Decode(&data)
-	if decodeErr != nil {
-		return nil, http.StatusInternalServerError, fmt.Errorf("erreur JSON : %s", decodeErr.Error())
+	err = json.NewDecoder(res.Body).Decode(&data)
+	if err != nil {
+		return nil, http.StatusInternalServerError, fmt.Errorf("erreur JSON : %s", err.Error())
 	}
+
+	LastSearchResults = data.Leaderboards
 
 	return data.Leaderboards, res.StatusCode, nil
 }

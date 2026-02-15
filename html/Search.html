@@ -48,11 +48,15 @@
         <p>Difficulté : {{.Difficulty.DifficultyRaw}}</p>
         <p>Mode : {{.Difficulty.GameMode}}</p>
         <p>Plays : {{.Plays}}</p>
-        <p>Statut :
+        <p>
             {{if .Ranked}}Ranked{{end}}
             {{if .Qualified}}Qualified{{end}}
             {{if .Loved}}Loved{{end}}
         </p>
+
+        <a href="/favorite/toggle?id={{.ID}}">
+            {{if .IsFav}}★{{else}}☆{{end}}
+        </a>
     </div>
     {{end}}
 </div>

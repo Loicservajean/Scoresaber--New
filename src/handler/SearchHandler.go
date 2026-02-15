@@ -20,7 +20,6 @@ type SearchPageData struct {
 }
 
 func SearchHandler(w http.ResponseWriter, r *http.Request) {
-
 	q := r.URL.Query().Get("q")
 
 	pageStr := r.URL.Query().Get("page")
@@ -47,6 +46,7 @@ func SearchHandler(w http.ResponseWriter, r *http.Request) {
 
 	for i := range maps {
 		maps[i].Difficulty.DifficultyRaw = service.DifficultyName(maps[i].Difficulty.DifficultyRaw)
+		maps[i].IsFav = service.IsFavori(maps[i].ID)
 	}
 
 	limitStr := r.URL.Query().Get("limit")

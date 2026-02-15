@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>À propos</title>
+    <link rel="stylesheet" href="/assets/css/Apropos.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">ScoreSaber</div>
+    <nav>
+        <a href="/">Accueil</a>
+        <a href="/search">Recherche</a>
+        <a href="/favorites">Favoris</a>
+        <a href="/apropos">À propos</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <h1>À propos du projet</h1>
+
+    <section>
+        <h2>Présentation</h2>
+        <p>BeatScorer est un site web utilisent l’API ScoreSaber pour voir les informations des joueurs Beat Saber. 
+        ce site permet de consulter les profil, les scores récents, les maps, ainsi que de rechercher par filtrer.</p>
+    </section>
+
+    <section>
+        <h2>Objectifs</h2>
+        <p>Le but du projet est d’exploiter une API REST et de manipuler les données pour créer un site complet qui comprent :</p>
+        <ul>
+            <li>La recherche de maps et de joueurs</li>
+            <li>Des filtres cumulables</li>
+            <li>Un système de pagination</li>
+            <li>Une gestion de favoris</li>
+            <li>Une page de détails des joueurs</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>API utilisée</h2>
+        <p>Nom : ScoreSaber API</p>
+        <p>Documentation : <a href="https://docs.scoresaber.com/" target="_blank">docs.scoresaber.com</a></p>
+        <p>L’API fournit des données sur les joueurs, leurs scores et les leaderboards. Les réponses son au format JSON, et accessibles via des requêtes GET.</p>
+
+        <h3>Endpoints exploités</h3>
+        <ul>
+            <li>/api/player/{id}/full — Profil complet d’un joueur</li>
+            <li>/api/player/{id}/scores — Scores récents</li>
+            <li>/api/leaderboards?search= — Recherche de maps</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Déroulement du projet</h2>
+
+        <h3>Découpage</h3>
+        <p>choix de l’API, tests des endpoints, création des pages HTML/CSS, développement des handlers Go, puis intégration des fonctionnalités (recherche, filtres, pagination, favoris).</p>
+
+        <h3>Organisation</h3>
+        <p>les tâches  ont été organisé par priorité :les endpoints, les pages principales, les fonctionnalités obligatoires pour finir sur le design.</p>
+
+        <h3>Gestion du temps</h3>
+        <p>Les fonctionnalités obligatoires ont été faites en premier pour assurer le rendu du projet. API → pages → fonctionnalités → tests. </p>
+
+        <h3>Documentation</h3>
+        <p>la documentation officielle ScoreSaber se trouve sur swagger ce qui permet de tester les endpoints de puis le site</p>
+    </section>
+
+    <section>
+        <h2>FAQ</h2>
+
+        <h3>Pourquoi ScoreSaber ?</h3>
+        <p>Parce que j'aime Beat Saber. et je voulais une API qui me plais </p>
+
+        <h3>Quelle a été la partie la plus complexe ?</h3>
+        <p>La gestion des filtres cumulables et la recherche de joueurs par nom.</p>
+
+        <h3>Qu’est‑ce que j’ai appris ?</h3>
+        <p>Manipuler une API REST en Go.</p>
+
+    </section>
+
+</div>
+
+</body>
+</html>

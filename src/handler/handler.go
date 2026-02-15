@@ -83,3 +83,8 @@ func searchName(name string) (string, error) {
 
 	return d.Players[0].ID, nil
 }
+
+func AproposHandler(w http.ResponseWriter, r *http.Request) {
+	t, _ := template.ParseFiles("html/Apropos.html")
+	t.Execute(w, nil)
+}

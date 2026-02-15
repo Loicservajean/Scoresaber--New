@@ -21,6 +21,8 @@ func Routes(mux *http.ServeMux) {
 	mux.HandleFunc("/favorite/toggle", handler.ToggleFavoriHandler)
 	mux.HandleFunc("/favorites", handler.FavorisPageHandler)
 
+	mux.HandleFunc("/apropos", handler.AproposHandler)
+
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		templates.ExecuteTemplate(w, "Home.html", nil)
 	})

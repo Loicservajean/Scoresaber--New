@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -156,11 +157,11 @@ type Difficulty struct {
 	DifficultyRaw string `json:"difficultyRaw"`
 }
 
-func GetMaps(name string) ([]Leaderboard, int, error) {
+func GetMaps(name string, page int) ([]Leaderboard, int, error) {
 	client := http.Client{Timeout: 5 * time.Second}
 
 	encoded := url.QueryEscape(name)
-	url := "https://scoresaber.com/api/leaderboards?search=" + encoded
+	url := "https://scoresaber.com/api/leaderboards?search=" + encoded + "&page=" + strconv.Itoa(page)
 
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {

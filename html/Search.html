@@ -1,62 +1,66 @@
-    <!DOCTYPE html>
-    <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <title>Recherche de maps</title>
-        <link rel="stylesheet" href="/assets/css/Search.css">
-    </head>
-    <body>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Recherche de maps</title>
+    <link rel="stylesheet" href="/assets/css/Search.css">
+</head>
+<body>
 
-    <h1>Recherche de maps</h1>
+<h1>Recherche de maps</h1>
 
-    <form method="GET" action="/search">
-        <input type="text" name="q" placeholder="Nom de la map" value="{{.Query}}">
+<form method="GET" action="/search">
+    <input type="text" name="q" placeholder="Nom de la map" value="{{.Query}}">
 
-        <select name="difficulty">
-            <option value="">Difficulté</option>
-            <option value="_Easy_SoloStandard">Easy</option>
-            <option value="_Normal_SoloStandard">Normal</option>
-            <option value="_Hard_SoloStandard">Hard</option>
-            <option value="_Expert_SoloStandard">Expert</option>
-            <option value="_ExpertPlus_SoloStandard">Expert+</option>
-        </select>
+    <select name="difficulty">
+        <option value="">Difficulté</option>
+        <option value="_Easy_SoloStandard">Easy</option>
+        <option value="_Normal_SoloStandard">Normal</option>
+        <option value="_Hard_SoloStandard">Hard</option>
+        <option value="_Expert_SoloStandard">Expert</option>
+        <option value="_ExpertPlus_SoloStandard">Expert+</option>
+    </select>
 
-        <select name="mode">
-            <option value="">Mode</option>
-            <option value="SoloStandard">SoloStandard</option>
-            <option value="SoloOneSaber">SoloOneSaber</option>
-            <option value="Solo360Degree">Solo360Degree</option>
-            <option value="Solo90Degree">Solo90Degree</option>
-        </select>
+    <select name="mode">
+        <option value="">Mode</option>
+        <option value="SoloStandard">SoloStandard</option>
+        <option value="SoloOneSaber">SoloOneSaber</option>
+        <option value="Solo360Degree">Solo360Degree</option>
+        <option value="Solo90Degree">Solo90Degree</option>
+    </select>
 
-        <select name="status">
-            <option value="">Statut</option>
-            <option value="ranked">Ranked</option>
-            <option value="qualified">Qualified</option>
-            <option value="loved">Loved</option>
-        </select>
+    <select name="status">
+        <option value="">Statut</option>
+        <option value="ranked">Ranked</option>
+        <option value="qualified">Qualified</option>
+        <option value="loved">Loved</option>
+    </select>
 
-        <button type="submit">Rechercher</button>
-    </form>
+    <button type="submit">Rechercher</button>
+</form>
 
-    <div class="results">
-        {{range .Maps}}
-        <div class="map-card">
-            <img src="{{.CoverImage}}" class="cover">
-            <p>{{.SongName}}</p>
-            <p>Author : {{.SongAuthorName}}</p>
-            <p>Difficulté : {{.Difficulty.DifficultyRaw}}</p>
-            <p>Mode : {{.Difficulty.GameMode}}</p>
-            <p>Plays : {{.Plays}}</p>
-            <p>Statut :
-                {{if .Ranked}}Ranked{{end}}
-                {{if .Qualified}}Qualified{{end}}
-                {{if .Loved}}Loved{{end}}
-            </p>
-
-        </div>
-        {{end}}
+<div class="results">
+    {{range .Maps}}
+    <div class="map-card">
+        <img src="{{.CoverImage}}" class="cover">
+        <p>{{.SongName}}</p>
+        <p>Author : {{.SongAuthorName}}</p>
+        <p>Difficulté : {{.Difficulty.DifficultyRaw}}</p>
+        <p>Mode : {{.Difficulty.GameMode}}</p>
+        <p>Plays : {{.Plays}}</p>
+        <p>Statut :
+            {{if .Ranked}}Ranked{{end}}
+            {{if .Qualified}}Qualified{{end}}
+            {{if .Loved}}Loved{{end}}
+        </p>
     </div>
+    {{end}}
+</div>
 
-    </body>
-    </html>
+<div class="pagination">
+    <a href="?q={{.Query}}&difficulty={{.Difficulty}}&mode={{.Mode}}&status={{.Status}}&limit={{.Limit}}&page={{.PrevPage}}">Précédent</a>
+    <a href="?q={{.Query}}&difficulty={{.Difficulty}}&mode={{.Mode}}&status={{.Status}}&limit={{.Limit}}&page={{.NextPage}}">Suivant</a>
+</div>
+
+</body>
+</html>

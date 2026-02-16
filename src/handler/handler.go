@@ -15,8 +15,8 @@ type PlayerPageData struct {
 	Scores []service.PlayerScore
 }
 
+/* affiche la page d'un joueur  info + score */
 func PlayerPageHandler(w http.ResponseWriter, r *http.Request) {
-
 	id := r.URL.Query().Get("id")
 
 	if id == "" {
@@ -59,6 +59,7 @@ func isNum(s string) bool {
 	return err == nil
 }
 
+/* rechercher un joueur */
 func searchName(name string) (string, error) {
 	u := "https://scoresaber.com/api/players?search=" + url.QueryEscape(name)
 	resp, err := http.Get(u)
@@ -84,6 +85,7 @@ func searchName(name string) (string, error) {
 	return d.Players[0].ID, nil
 }
 
+/* affiche la page a propos */
 func AproposHandler(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("html/Apropos.html")
 	t.Execute(w, nil)

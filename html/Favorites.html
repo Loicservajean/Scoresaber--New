@@ -6,45 +6,43 @@
     <link rel="stylesheet" href="/assets/css/Favorites.css">
 </head>
 <body>
+    <header>
+        <div class="logo">ScoreSaber</div>
+        <nav>
+            <a href="/">Accueil</a>
+            <a href="/search">Recherche</a>
+            <a href="/favorites">Favoris</a>
+            <a href="/apropos">À propos</a>
+        </nav>
+    </header>
 
-<header>
-    <div class="logo">ScoreSaber</div>
-    <nav>
-        <a href="/">Accueil</a>
-        <a href="/search">Recherche</a>
-        <a href="/favorites">Favoris</a>
-        <a href="/apropos">À propos</a>
-    </nav>
-</header>
+    <h1>Vos Favoris</h1>
 
-<h1>Vos Favoris</h1>
+    <div class="fav-list">
+        {{range .}}
+        <div class="fav-card">
 
-<div class="fav-list">
-    {{range .}}
-    <div class="fav-card">
+            <img src="{{.CoverImage}}">
 
-        <img src="{{.CoverImage}}">
+            <div class="fav-info">
+                <p><strong>{{.SongName}}</strong></p>
+                <p>Auteur : {{.SongAuthorName}}</p>
+                <p>Difficulté : {{.Difficulty.DifficultyRaw}}</p>
+                <p>Mode : {{.Difficulty.GameMode}}</p>
+                <p>Plays : {{.Plays}}</p>
+                <p>
+                    {{if .Ranked}}Ranked{{end}}
+                    {{if .Qualified}}Qualified{{end}}
+                    {{if .Loved}}Loved{{end}}
+                </p>
+            </div>
 
-        <div class="fav-info">
-            <p><strong>{{.SongName}}</strong></p>
-            <p>Auteur : {{.SongAuthorName}}</p>
-            <p>Difficulté : {{.Difficulty.DifficultyRaw}}</p>
-            <p>Mode : {{.Difficulty.GameMode}}</p>
-            <p>Plays : {{.Plays}}</p>
-            <p>
-                {{if .Ranked}}Ranked{{end}}
-                {{if .Qualified}}Qualified{{end}}
-                {{if .Loved}}Loved{{end}}
-            </p>
+            <a class="fav-remove" href="/favorite/toggle?id={{.ID}}">★</a>
+
         </div>
-
-        <a class="fav-remove" href="/favorite/toggle?id={{.ID}}">★</a>
-
+        {{else}}
+            <p style="text-align:center;">Aucun favori pour le moment.</p>
+        {{end}}
     </div>
-    {{else}}
-        <p style="text-align:center;">Aucun favori pour le moment.</p>
-    {{end}}
-</div>
-
 </body>
 </html>

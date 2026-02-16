@@ -6,86 +6,86 @@
     <link rel="stylesheet" href="/assets/css/Search.css">
 </head>
 <body>
+    <header>
+        <div class="logo">ScoreSaber</div>
+        <nav>
+            <a href="/">Accueil</a>
+            <a href="/search">Recherche</a>
+            <a href="/favorites">Favoris</a>
+            <a href="/apropos">À propos</a>
+        </nav>
+    </header>
 
-<header>
-    <div class="logo">ScoreSaber</div>
-    <nav>
-        <a href="/">Accueil</a>
-        <a href="/search">Recherche</a>
-        <a href="/favorites">Favoris</a>
-        <a href="/apropos">À propos</a>
-    </nav>
-</header>
+    <h1>Recherche de maps</h1>
 
-<h1>Recherche de maps</h1>
+    <form method="GET" action="/search">
+        <input type="text" name="q" placeholder="Nom de la map" value="{{.Query}}">
 
-<form method="GET" action="/search">
-    <input type="text" name="q" placeholder="Nom de la map" value="{{.Query}}">
+        <select name="difficulty">
+            <option value="">Difficulté</option>
+            <option value="_Easy_SoloStandard">Easy</option>
+            <option value="_Normal_SoloStandard">Normal</option>
+            <option value="_Hard_SoloStandard">Hard</option>
+            <option value="_Expert_SoloStandard">Expert</option>
+            <option value="_ExpertPlus_SoloStandard">Expert+</option>
+        </select>
 
-    <select name="difficulty">
-        <option value="">Difficulté</option>
-        <option value="_Easy_SoloStandard">Easy</option>
-        <option value="_Normal_SoloStandard">Normal</option>
-        <option value="_Hard_SoloStandard">Hard</option>
-        <option value="_Expert_SoloStandard">Expert</option>
-        <option value="_ExpertPlus_SoloStandard">Expert+</option>
-    </select>
+        <select name="mode">
+            <option value="">Mode</option>
+            <option value="SoloStandard">SoloStandard</option>
+            <option value="SoloOneSaber">SoloOneSaber</option>
+            <option value="Solo360Degree">Solo360Degree</option>
+            <option value="Solo90Degree">Solo90Degree</option>
+        </select>
 
-    <select name="mode">
-        <option value="">Mode</option>
-        <option value="SoloStandard">SoloStandard</option>
-        <option value="SoloOneSaber">SoloOneSaber</option>
-        <option value="Solo360Degree">Solo360Degree</option>
-        <option value="Solo90Degree">Solo90Degree</option>
-    </select>
+        <select name="status">
+            <option value="">Statut</option>
+            <option value="ranked">Ranked</option>
+            <option value="qualified">Qualified</option>
+            <option value="loved">Loved</option>
+        </select>
 
-    <select name="status">
-        <option value="">Statut</option>
-        <option value="ranked">Ranked</option>
-        <option value="qualified">Qualified</option>
-        <option value="loved">Loved</option>
-    </select>
+        <button type="submit">Rechercher</button>
+    </form>
 
-    <button type="submit">Rechercher</button>
-</form>
+    <form method="GET" action="/player" class="player-search">
+        <input type="text" name="id">
+        <button type="submit">Rechercher joueur</button>
+    </form>
 
-<form method="GET" action="/player" class="player-search">
-    <input type="text" name="id">
-    <button type="submit">Rechercher joueur</button>
-</form>
-
-<div style="text-align:center; margin-top:20px;">
-    <a href="/favorites" style="color:#1db954; font-size:18px; text-decoration:none;">
-        ★ Voir mes favoris
-    </a>
-</div>
-
-<div class="results">
-    {{range .Maps}}
-    <div class="map-card">
-        <img src="{{.CoverImage}}" class="cover">
-        <p>{{.SongName}}</p>
-        <p>Author : {{.SongAuthorName}}</p>
-        <p>Difficulté : {{.Difficulty.DifficultyRaw}}</p>
-        <p>Mode : {{.Difficulty.GameMode}}</p>
-        <p>Plays : {{.Plays}}</p>
-        <p>
-            {{if .Ranked}}Ranked{{end}}
-            {{if .Qualified}}Qualified{{end}}
-            {{if .Loved}}Loved{{end}}
-        </p>
-
-        <a href="/favorite/toggle?id={{.ID}}">
-            {{if .IsFav}}★{{else}}☆{{end}}
+    <div style="text-align:center; margin-top:20px;">
+        <a href="/favorites" style="color:#1db954; font-size:18px; text-decoration:none;">
+            ★ Voir mes favoris
         </a>
     </div>
-    {{end}}
-</div>
 
-<div class="pagination">
-    <a href="?q={{.Query}}&difficulty={{.Difficulty}}&mode={{.Mode}}&status={{.Status}}&limit={{.Limit}}&page={{.PrevPage}}">Précédent</a>
-    <a href="?q={{.Query}}&difficulty={{.Difficulty}}&mode={{.Mode}}&status={{.Status}}&limit={{.Limit}}&page={{.NextPage}}">Suivant</a>
-</div>
+    <div class="results">
+        {{range .Maps}}
+        <div class="map-card">
+            <img src="{{.CoverImage}}" class="cover">
+            <p>{{.SongName}}</p>
+            <p>Author : {{.SongAuthorName}}</p>
+            <p>Difficulté : {{.Difficulty.DifficultyRaw}}</p>
+            <p>Mode : {{.Difficulty.GameMode}}</p>
+            <p>Plays : {{.Plays}}</p>
+            <p>
+                {{if .Ranked}}Ranked{{end}}
+                {{if .Qualified}}Qualified{{end}}
+                {{if .Loved}}Loved{{end}}
+            </p>
+
+            <a href="/favorite/toggle?id={{.ID}}">
+                {{if .IsFav}}★{{else}}☆{{end}}
+            </a>
+        </div>
+        {{end}}
+    </div>
+
+    <!-- bouton de navigation  --> >    
+    <div class="pagination">
+        <a href="?q={{.Query}}&difficulty={{.Difficulty}}&mode={{.Mode}}&status={{.Status}}&limit={{.Limit}}&page={{.PrevPage}}">Précédent</a>
+        <a href="?q={{.Query}}&difficulty={{.Difficulty}}&mode={{.Mode}}&status={{.Status}}&limit={{.Limit}}&page={{.NextPage}}">Suivant</a>
+    </div>
 
 </body>
 </html>

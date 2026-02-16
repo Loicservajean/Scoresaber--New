@@ -2,6 +2,7 @@ package service
 
 import "strings"
 
+/* filtre les maps par nom ou auteur */
 func FilterMapsBy(maps []Leaderboard, query string) []Leaderboard {
 	if query == "" {
 		return maps
@@ -22,9 +23,9 @@ func FilterMapsBy(maps []Leaderboard, query string) []Leaderboard {
 	return result
 }
 
+/* filtre les maps par difficulté/mode/statut */
 func FilterBy(maps []Leaderboard, difficulty, mode, status string) []Leaderboard {
 	var result []Leaderboard
-
 	for _, m := range maps {
 		if difficulty != "" && m.Difficulty.DifficultyRaw != difficulty {
 			continue
@@ -48,6 +49,5 @@ func FilterBy(maps []Leaderboard, difficulty, mode, status string) []Leaderboard
 
 		result = append(result, m)
 	}
-
 	return result
 }

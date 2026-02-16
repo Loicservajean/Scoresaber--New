@@ -1,5 +1,6 @@
 package service
 
+/* pagination des résultat */
 func Pagination(maps []Leaderboard, page int, limit int) []Leaderboard {
 	start := (page - 1) * limit
 	end := start + limit

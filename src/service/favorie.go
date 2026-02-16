@@ -20,6 +20,7 @@ type Favori struct {
 var Favoris []Favori
 var favFile = "data/favoris.json"
 
+/* charge les favoris depuis le json */
 func init() {
 	data, err := os.ReadFile(favFile)
 	if err == nil {
@@ -27,11 +28,13 @@ func init() {
 	}
 }
 
+/* ecrit les favoris dans le json */
 func save() {
 	data, _ := json.MarshalIndent(Favoris, "", "  ")
 	os.WriteFile(favFile, data, 0644)
 }
 
+/* ajout de favori si non présent */
 func AddFavori(lb Leaderboard) {
 	for _, f := range Favoris {
 		if f.ID == lb.ID {
@@ -54,6 +57,7 @@ func AddFavori(lb Leaderboard) {
 	save()
 }
 
+/* retirer un favoris */
 func RemoveFavori(id int) {
 	newList := []Favori{}
 	for _, f := range Favoris {
@@ -65,6 +69,7 @@ func RemoveFavori(id int) {
 	save()
 }
 
+/* check si favoris ou pas */
 func IsFavori(id int) bool {
 	for _, f := range Favoris {
 		if f.ID == id {
@@ -74,6 +79,7 @@ func IsFavori(id int) bool {
 	return false
 }
 
+/* retourne tous les favoris */
 func GetFavoris() []Favori {
 	return Favoris
 }

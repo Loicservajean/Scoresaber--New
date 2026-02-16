@@ -19,6 +19,7 @@ type SearchPageData struct {
 	Limit      int
 }
 
+/* gestion de la recherche */
 func SearchHandler(w http.ResponseWriter, r *http.Request) {
 	q := r.URL.Query().Get("q")
 

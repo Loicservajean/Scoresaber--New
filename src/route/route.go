@@ -8,21 +8,19 @@ import (
 
 var templates *template.Template
 
+/* chargement des template */
 func LoadTemplates() {
 	templates, _ = template.ParseGlob("html/*.html")
 }
 
+/* liste des routes */
 func Routes(mux *http.ServeMux) {
 	mux.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
-
 	mux.HandleFunc("/player", handler.PlayerPageHandler)
 	mux.HandleFunc("/search", handler.SearchHandler)
-
 	mux.HandleFunc("/favorite/toggle", handler.ToggleFavoriHandler)
 	mux.HandleFunc("/favorites", handler.FavorisPageHandler)
-
 	mux.HandleFunc("/apropos", handler.AproposHandler)
-
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		templates.ExecuteTemplate(w, "Home.html", nil)
 	})

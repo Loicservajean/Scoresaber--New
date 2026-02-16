@@ -10,6 +10,7 @@ import (
 	"time"
 )
 
+/* stat d'un joueur */
 type ScoreStats struct {
 	TotalScore            int     `json:"totalScore"`
 	TotalRankedScore      int     `json:"totalRankedScore"`
@@ -19,6 +20,7 @@ type ScoreStats struct {
 	ReplaysWatched        int     `json:"replaysWatched"`
 }
 
+/* donnés d'un joueur */
 type User struct {
 	ID          string     `json:"id"`
 	Name        string     `json:"name"`
@@ -34,6 +36,7 @@ type PlayerScoreResponse struct {
 	PlayerScores []PlayerScore `json:"playerScores"`
 }
 
+/* score individuelle d'un joueur */
 type PlayerScore struct {
 	Leaderboard struct {
 		ID             int    `json:"id"`
@@ -43,7 +46,6 @@ type PlayerScore struct {
 		CoverImage     string `json:"coverImage"`
 		MaxScore       int    `json:"maxScore"`
 	} `json:"leaderboard"`
-
 	Score struct {
 		Rank      int     `json:"rank"`
 		BaseScore int     `json:"baseScore"`
@@ -52,6 +54,7 @@ type PlayerScore struct {
 	} `json:"score"`
 }
 
+/* récupére les info d'un joueur */
 func GetUser(id string) (*User, int, error) {
 	client := http.Client{Timeout: 5 * time.Second}
 	url := "https://scoresaber.com/api/player/" + id + "/full"
@@ -80,6 +83,7 @@ func GetUser(id string) (*User, int, error) {
 	return &data, res.StatusCode, nil
 }
 
+/* récupère le sscores des joueur */
 func GetUserScores(id string) ([]PlayerScore, int, error) {
 	client := http.Client{Timeout: 5 * time.Second}
 	url := "https://scoresaber.com/api/player/" + id + "/scores?limit=10&sort=recent"
@@ -129,6 +133,7 @@ type Metadata struct {
 	ItemsPerPage int `json:"itemsPerPage"`
 }
 
+/* donnés d'une maps */
 type Leaderboard struct {
 	ID              int        `json:"id"`
 	SongHash        string     `json:"songHash"`
@@ -156,6 +161,7 @@ type Difficulty struct {
 
 var LastSearchResults []Leaderboard
 
+/* récupére les maps selon le nom et la page */
 func GetMaps(name string, page int) ([]Leaderboard, int, error) {
 	client := http.Client{Timeout: 5 * time.Second}
 	encoded := url.QueryEscape(name)
@@ -187,6 +193,7 @@ func GetMaps(name string, page int) ([]Leaderboard, int, error) {
 	return data.Leaderboards, res.StatusCode, nil
 }
 
+/* nom lisible des difficulté */
 func DifficultyName(raw string) string {
 	switch {
 	case strings.Contains(raw, "Easy"):
@@ -201,24 +208,4 @@ func DifficultyName(raw string) string {
 		return "Expert"
 	}
 	return raw
-}
-
-func FilterMaps(maps []Leaderboard, query string) []Leaderboard {
-	if query == "" {
-		return maps
-	}
-
-	query = strings.ToLower(query)
-	var result []Leaderboard
-
-	for _, m := range maps {
-		name := strings.ToLower(m.SongName)
-		author := strings.ToLower(m.SongAuthorName)
-
-		if strings.Contains(name, query) || strings.Contains(author, query) {
-			result = append(result, m)
-		}
-	}
-
-	return result
 }

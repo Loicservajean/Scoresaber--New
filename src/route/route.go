@@ -2,6 +2,7 @@ package route
 
 import (
 	"SCORESABER--New/src/handler"
+	"fmt"
 	"html/template"
 	"net/http"
 )
@@ -22,6 +23,11 @@ func Routes(mux *http.ServeMux) {
 	mux.HandleFunc("/favorites", handler.FavorisPageHandler)
 	mux.HandleFunc("/apropos", handler.AproposHandler)
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		templates.ExecuteTemplate(w, "Home.html", nil)
+		fmt.Println(r.URL.Path)
+		if r.URL.Path == "/" || r.URL.Path == "/home" {
+			templates.ExecuteTemplate(w, "Home.html", nil)
+		} else {
+			templates.ExecuteTemplate(w, "404.html", nil)
+		}
 	})
 }

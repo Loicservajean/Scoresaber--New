@@ -64,7 +64,7 @@ Ajout / suppression de favoris.
 sauvegarder dans un fichier JSON.
 
 ---
-
+```
 C:.
 │   .gitattributes
 │   go.mod
@@ -110,3 +110,4 @@ C:.
             filters.go
             pagination.go
             service.go
+```

@@ -64,3 +64,49 @@ Ajout / suppression de favoris.
 sauvegarder dans un fichier JSON.
 
 ---
+
+C:.
+│   .gitattributes
+│   go.mod
+│   README.md
+│
+├───assets
+│   ├───css
+│   │       404.css
+│   │       apropos.css
+│   │       favorites.css
+│   │       Home.css
+│   │       Player.css
+│   │       Search.css
+│   │
+│   └───img
+│           banner.jpg
+│
+├───data
+│       favoris.json
+│
+├───html
+│       404.html
+│       apropos.html
+│       Favorites.html
+│       Home.html
+│       Player.html
+│       Search.html
+│
+└───src
+    ├───cmd
+    │       main.go
+    │
+    ├───handler
+    │       FavorieHandler.go
+    │       handler.go
+    │       SearchHandler.go
+    │
+    ├───route
+    │       route.go
+    │
+    └───service
+            favorie.go
+            filters.go
+            pagination.go
+            service.go
